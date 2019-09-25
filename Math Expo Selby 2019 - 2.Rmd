@@ -2,13 +2,11 @@
 title: Using RStudio's R-Notebooks for Creating Interactive Content for Statistics
   Courses
 author: "Dr. Bekah Selby (ESU - Math and Econ)"
-output:
-  html_notebook: default
-  html_document: default
+output: revealjs::revealjs_presentation
 ---
 
 ```{r,render=F,include=FALSE,echo=FALSE}
-setwd("C:/Users/rselby/OneDrive - emporia.edu/Presentations")
+setwd("C:/Users/rselby/Google Drive/GitHub/Econometrics/teaching-expo-2019")
 knitr::opts_chunk$set(warning=F,message=F)
 ```
 

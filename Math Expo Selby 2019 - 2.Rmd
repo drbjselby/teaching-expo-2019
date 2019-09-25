@@ -1,0 +1,150 @@
+---
+title: Using RStudio's R-Notebooks for Creating Interactive Content for Statistics
+  Courses
+author: "Dr. Bekah Selby (ESU - Math and Econ)"
+output:
+  html_notebook: default
+  html_document: default
+---
+
+```{r,render=F,include=FALSE,echo=FALSE}
+setwd("C:/Users/rselby/OneDrive - emporia.edu/Presentations")
+knitr::opts_chunk$set(warning=F,message=F)
+```
+
+# Introduction to R-Studio's R-Notebook
+
+## The YAML Header 
+
+- The first thing you see in a notebook is a YAML header. 
+  - title:
+  - author:
+  - output:
+  - date:
+- This renders in the output as a title. 
+- You can choose lots of formats for the output, here we choose `html_notebook` to use the R-notebook capabilities 
+
+## Purpose of a Notebook
+
+- The R-notebook is a way to include all components of an analysis:
+  - Code
+  - Output
+  - Discussion
+- It also has the capability of using interactives because it is rendered in html 
+- In classroom assignments, this creates an emphasis on transparency of research and analysis (nothing is done "behind the scenes")
+
+## Markdown: 
+
+- Uses markdown syntax to create formatted headers (see above), paragraphs, bulleted lists (this is one!), *font* **emphasis**, [hyperlinks](http://rstudio.com), block quotes, images, and more
+- Renders math-equations using LaTeX. Example: 
+```{r,echo=FALSE}
+print("The equation $$Y_t = X_t + \varepsilon_t $$ renders to")
+```
+
+$$Y_t = X_t + \varepsilon_t $$
+
+- This is commonly used to write up discussion about the analysis!
+
+## R-Chunks
+
+R-chunks are pieces of code that are included in the place where the output is wanted.
+
+- Included Chunk
+```{r}
+x<-c("Hello","World")
+x
+```
+
+- Excluded Chunk 
+```{r,echo=FALSE}
+x<-c("Hello","World")
+x
+```
+
+- Excluded Output
+```{r,include=FALSE}
+x<-c("Hello","World")
+x
+```
+
+## Example: A Scatter Plot
+
+The object `cars` is a data frame with two columns 
+
+```{r}
+head(cars)
+```
+
+## 
+
+We can include a scatter plot of our variables using the `plot()` function in a R-chunk 
+
+```{r}
+plot(cars)
+```
+
+## Inline R Code
+
+- You can also write up code using inline syntax
+- If we want to calculate the average of `cars$speed`, we might write 
+```{r}
+mean(cars$speed)
+```
+
+or write "The average is `r mean(cars$speed)`" 
+
+# Creating an Interactive Notebook
+
+## Tutorials 
+
+```{r,warning=FALSE,message=FALSE}
+#install.packages("tutorial")
+library(tutorial)
+go_interactive(greedy = FALSE)
+```
+
+```{r,tut=T}
+# Calculate 2 + 5, save as object a
+
+# Print object a
+
+
+```
+
+## Interactives using Shiny
+
+- Using `runtime: shiny` in the YAML, you can create interactive apps
+- I have a problem when making this presentation however... 
+- The Shiny runtime does not work with the `tutorial` package!
+- My workaround, for this presentation: a separate file
+
+## Interactive Graphs Using Plotly
+
+```{r,echo=F,warning=FALSE,message=FALSE}
+library(plotly)
+m <- list(
+  l = 50,
+  r = 50,
+  b = 100,
+  t = 100,
+  pad = 4
+)
+```
+
+```{r,warning=FALSE,message=FALSE}
+p <- plot_ly(cars, x = ~speed, y = ~dist) %>% 
+  layout(autosize = F, width = 500, height = 500, margin = m)
+p
+```
+
+
+## Time Trends with dygraphs
+
+```{r,warning=FALSE,message=FALSE}
+library(dygraphs)
+dygraph(nhtemp, main = "New Haven Temperatures") %>% 
+  dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
+```
+
+
+

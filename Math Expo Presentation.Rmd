@@ -2,23 +2,64 @@
 title: Using RStudio's R-Notebooks for Creating Interactive Content for Statistics
   Courses
 author: "Dr. Bekah Selby (ESU - Math and Econ)"
-output: revealjs::revealjs_presentation
+date: "October 4, 2019"
+output: html_document
+runtime: shiny_prerendered
 ---
+
+
 
 ```{r,render=F,include=FALSE,echo=FALSE}
 setwd("C:/Users/rselby/Google Drive/GitHub/Econometrics/teaching-expo-2019")
 knitr::opts_chunk$set(warning=F,message=F)
 ```
 
+# Introduction 
+
+## About Me
+
+- Dr. Bekah Selby
+- Assistant Professor of Economics at Emporia State University
+- Data Nerd by trade (applied econometrician)
+- Teach classes ranging from basic statistics to graduate level applied econometrics
+
+## My Problems
+
+- Data can be daunting
+- Students feel disenfranchised in mathematics courses
+- AKA they dread them 
+- How to make statistics "come to life"
+- How to emphasize transparency 
+- How to reduce my own workload 
+
+## One Solution
+
+- Use technology that combines interactivity with transparency
+- Rstudio has a feature called "R-Notebooks"
+  - Scripting + Word Processing
+  - Includes code with visuals and other output
+  - Emphasizes process and description 
+  - Great place for students to do homework if R is incorporated as part of the curriculum 
+- Also good for the teacher: 
+  - Create complementary slides and handouts very easily
+  - Homework is output to a .html file which renders on LMS
+  - Teachers can download .Rmd source file from submissions
+
+## Today
+
+- Introduce some features of notebooks that I frequently use 
+- Show you the basic structure of R-Notebooks so you can get started right away
+- Discuss creation of interactive content and how it can be incorporated in LMS
+
 # Introduction to R-Studio's R-Notebook
 
 ## The YAML Header 
 
 - The first thing you see in a notebook is a YAML header. 
-  - title:
-  - author:
-  - output:
-  - date:
+  - title: "An Exceptional Title"
+  - author: "Dr. Such and Such"
+  - output: html_notebook
+  - date: "October 4, 2019"
 - This renders in the output as a title. 
 - You can choose lots of formats for the output, here we choose `html_notebook` to use the R-notebook capabilities 
 
@@ -33,8 +74,9 @@ knitr::opts_chunk$set(warning=F,message=F)
 
 ## Markdown: 
 
-- Uses markdown syntax to create formatted headers (see above), paragraphs, bulleted lists (this is one!), *font* **emphasis**, [hyperlinks](http://rstudio.com), block quotes, images, and more
-- Renders math-equations using LaTeX. Example: 
+Uses markdown syntax to create formatted headers (see above), paragraphs, bulleted lists (this is one!), *font* **emphasis**, [hyperlinks](http://rstudio.com), block quotes, images, and more
+
+Renders math-equations using LaTeX. Example: 
 ```{r,echo=FALSE}
 print("The equation $$Y_t = X_t + \varepsilon_t $$ renders to")
 ```
@@ -53,38 +95,24 @@ x<-c("Hello","World")
 x
 ```
 
-- Excluded Chunk 
+- Excluded Chunk (you won't see the code on the screen)
 ```{r,echo=FALSE}
 x<-c("Hello","World")
 x
 ```
 
-- Excluded Output
+- Excluded Output (you won't see the code or the output on the screen!)
 ```{r,include=FALSE}
 x<-c("Hello","World")
 x
 ```
 
-## Example: A Scatter Plot
-
-The object `cars` is a data frame with two columns 
-
-```{r}
-head(cars)
-```
-
-## 
-
-We can include a scatter plot of our variables using the `plot()` function in a R-chunk 
-
-```{r}
-plot(cars)
-```
 
 ## Inline R Code
 
-- You can also write up code using inline syntax
-- If we want to calculate the average of `cars$speed`, we might write 
+You can also write up code using inline syntax
+
+If we want to calculate the average of `cars$speed`, we might write 
 ```{r}
 mean(cars$speed)
 ```
@@ -93,20 +121,68 @@ or write "The average is `r mean(cars$speed)`"
 
 # Creating an Interactive Notebook
 
-## Tutorials 
+## Creating Basic Plots and Tables in R 
+First things first, using R to create visuals.
 
-```{r,warning=FALSE,message=FALSE}
-#install.packages("tutorial")
-library(tutorial)
-go_interactive(greedy = FALSE)
+We are going to use data already preinstalled in R called `cars`
+
+1. Create a table containing the first 10 observations from the data set `cars`: 
+
+##
+
+```{r}
+head(cars,10)
 ```
 
-```{r,tut=T}
-# Calculate 2 + 5, save as object a
+## 
 
-# Print object a
+2. Create a scatter plot of the speed and distance in the data set `cars` 
+
+##
+
+```{r}
+plot(cars)
+```
+
+## 
+
+3. Create a summary statistics table including the mean, standard deviation, and min and max for the variables in the data set `cars`.
+
+##
+
+```{r}
+#install.packages("psych")
+library(psych)
+describe(cars,skew = F,trim = 0,IQR = T)
+```
+
+##
+
+4. Create a histogram for the speed of cars in the data set `cars`. 
+
+##
+
+```{r}
+hist(cars$speed)
+```
+
+## Tutorials and Quizzes 
+
+Suppose we want to create an interactive tutorial where students can test their knowledge of R commands. 
+
+```{r}
+#install.packages("learnr")
+library(learnr)
+```
+
+```{r mean,exercise=T}
+# Calculate the average speed of cars. Save as an object called `mean`
 
 
+```
+
+```{r mean-solution}
+mean<-mean(cars$speed)
 ```
 
 ## Interactives using Shiny
@@ -130,19 +206,35 @@ m <- list(
 ```
 
 ```{r,warning=FALSE,message=FALSE}
-p <- plot_ly(cars, x = ~speed, y = ~dist) %>% 
-  layout(autosize = F, width = 500, height = 500, margin = m)
+p <- plot_ly(cars, x = ~speed, y = ~dist)
 p
 ```
 
+##
 
-## Time Trends with dygraphs
-
-```{r,warning=FALSE,message=FALSE}
-library(dygraphs)
-dygraph(nhtemp, main = "New Haven Temperatures") %>% 
-  dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
+```{r}
+plot_ly(x = cars$speed, type = "histogram")
 ```
+
+##
+
+```{r}
+plot_ly(x = cars$speed, type = "box")
+```
+
+
+## 2D Histograms 
+
+```{r}
+p <- plot_ly(x=cars$speed,y=cars$dist)
+pp <- subplot(
+  p %>% add_markers(alpha = 0.2),
+  p %>% add_histogram2d()
+)
+pp
+
+```
+
 
 
 

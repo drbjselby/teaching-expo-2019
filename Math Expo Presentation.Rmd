@@ -23,6 +23,7 @@ knitr::opts_chunk$set(warning=F,message=F)
 - Click "New Project from Git Repo" 
 - In this type: https://github.com/drbjselby/teaching-expo-2019
 - Click "Ok" 
+- You can download the files individually by going to http://drbjselby.github.io 
 
 ## Setup 
 

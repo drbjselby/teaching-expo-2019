@@ -11,7 +11,7 @@ output:
 
 
 ```{r,render=F,include=FALSE,echo=FALSE}
-setwd("C:/Users/rselby/Google Drive/GitHub/Econometrics/teaching-expo-2019")
+#setwd("C:/Users/rselby/Google Drive/GitHub/Econometrics/teaching-expo-2019")
 knitr::opts_chunk$set(warning=F,message=F)
 ```
 

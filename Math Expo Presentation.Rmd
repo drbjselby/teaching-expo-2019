@@ -3,7 +3,9 @@ title: Using RStudio's R-Notebooks for Creating Interactive Content for Statisti
   Courses
 author: "Dr. Bekah Selby (ESU - Math and Econ)"
 date: "October 4, 2019"
-output: ioslides_presentation
+output: 
+  ioslides_presentation:
+    incremental: true 
 runtime: shiny_prerendered
 ---
 

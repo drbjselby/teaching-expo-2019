@@ -3,14 +3,14 @@ title: Using RStudio's R-Notebooks for Creating Interactive Content for Statisti
   Courses
 author: "Dr. Bekah Selby (ESU - Math and Econ)"
 date: "October 4, 2019"
-output: html_document
+output: ioslides_presentation
 runtime: shiny_prerendered
 ---
 
 
 
 ```{r,render=F,include=FALSE,echo=FALSE}
-setwd("C:/Users/rselby/Google Drive/GitHub/Econometrics/teaching-expo-2019")
+#setwd("C:/Users/rselby/Google Drive/GitHub/Econometrics/teaching-expo-2019")
 knitr::opts_chunk$set(warning=F,message=F)
 ```
 
@@ -168,7 +168,7 @@ hist(cars$speed)
 
 ## Tutorials and Quizzes 
 
-Suppose we want to create an interactive tutorial where students can test their knowledge of R commands. 
+Suppose we want to create an interactive tutorial where students can practice their R analysis skills! 
 
 ```{r}
 #install.packages("learnr")
@@ -188,9 +188,8 @@ mean<-mean(cars$speed)
 ## Interactives using Shiny
 
 - Using `runtime: shiny` in the YAML, you can create interactive apps
-- I have a problem when making this presentation however... 
-- The Shiny runtime does not work with the `tutorial` package!
-- My workaround, for this presentation: a separate file
+- This presentation is using the `learnr` package which requires the `runtime: shiny_prerendered` option
+- My workaround, for this presentation: a separate file!
 
 ## Interactive Graphs Using Plotly
 
@@ -206,8 +205,8 @@ m <- list(
 ```
 
 ```{r,warning=FALSE,message=FALSE}
-p <- plot_ly(cars, x = ~speed, y = ~dist)
-p
+plot_ly(cars, x = ~speed, y = ~dist)
+
 ```
 
 ##
@@ -226,12 +225,12 @@ plot_ly(x = cars$speed, type = "box")
 ## 2D Histograms 
 
 ```{r}
-p <- plot_ly(x=cars$speed,y=cars$dist)
-pp <- subplot(
-  p %>% add_markers(alpha = 0.2),
-  p %>% add_histogram2d()
-)
-pp
+plot<-plot_ly(x=cars$speed,y=cars$dist)
+(subplot(
+  plot %>% add_markers(alpha = 0.2),
+  plot %>% add_histogram2d()
+))
+
 
 ```
 

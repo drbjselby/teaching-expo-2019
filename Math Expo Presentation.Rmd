@@ -12,9 +12,24 @@ runtime: shiny_prerendered
 
 
 ```{r,render=F,include=FALSE,echo=FALSE}
-#setwd("C:/Users/rselby/Google Drive/GitHub/Econometrics/teaching-expo-2019")
 knitr::opts_chunk$set(warning=F,message=F)
 ```
+
+## Setup 
+
+- Go to http://rstudio.cloud
+- Sign up (you can use a gmail or GitHub account, if you have one)
+- Click the down arrow next to "New Project"
+- Click "New Project from Git Repo" 
+- In this type: https://github.com/drbjselby/teaching-expo-2019
+- Click "Ok" 
+
+## Setup 
+
+- Click the "math-expo-rstudio.Rmd" file in the bottom right
+- Click install for the packages needed 
+- Wait while the packages install... 
+- Click "Run Document"
 
 # Introduction 
 

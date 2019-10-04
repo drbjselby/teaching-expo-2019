@@ -2,18 +2,32 @@
 title: Using RStudio's R-Notebooks for Creating Interactive Content for Statistics
   Courses
 author: "Dr. Bekah Selby (ESU - Math and Econ)"
-output:
-  html_document: default
-  html_notebook: default
+date: "October 4, 2019"
+output: html_document
+runtime: shiny_prerendered
 ---
 
 
 
-
 ```{r,render=F,include=FALSE,echo=FALSE}
-#setwd("C:/Users/rselby/Google Drive/GitHub/Econometrics/teaching-expo-2019")
 knitr::opts_chunk$set(warning=F,message=F)
 ```
+
+## Setup 
+
+- Go to http://rstudio.cloud
+- Sign up (you can use a gmail or GitHub account, if you have one)
+- Click the down arrow next to "New Project"
+- Click "New Project from Git Repo" 
+- In this type: https://github.com/drbjselby/teaching-expo-2019
+- Click "Ok" 
+
+## Setup 
+
+- Click the "math-expo-rstudio.Rmd" file in the bottom right
+- Click install for the packages needed 
+- Wait while the packages install... 
+- Click "Run Document"
 
 # Introduction 
 
@@ -96,13 +110,13 @@ x<-c("Hello","World")
 x
 ```
 
-- Excluded Chunk 
+- Excluded Chunk (you won't see the code on the screen)
 ```{r,echo=FALSE}
 x<-c("Hello","World")
 x
 ```
 
-- Excluded Output
+- Excluded Output (you won't see the code or the output on the screen!)
 ```{r,include=FALSE}
 x<-c("Hello","World")
 x
@@ -111,8 +125,9 @@ x
 
 ## Inline R Code
 
-- You can also write up code using inline syntax
-- If we want to calculate the average of `cars$speed`, we might write 
+You can also write up code using inline syntax
+
+If we want to calculate the average of `cars$speed`, we might write 
 ```{r}
 mean(cars$speed)
 ```
@@ -168,28 +183,28 @@ hist(cars$speed)
 
 ## Tutorials and Quizzes 
 
-Suppose we want to create an interactive tutorial where students can test their knowledge of R commands. 
+Suppose we want to create an interactive tutorial where students can practice their R analysis skills! 
 
-```{r,warning=FALSE,message=FALSE}
-#install.packages("tutorial")
-library(tutorial)
-go_interactive(greedy = FALSE)
+```{r}
+#install.packages("learnr")
+library(learnr)
 ```
 
-```{r,tut=T}
+```{r mean,exercise=T}
 # Calculate the average speed of cars. Save as an object called `mean`
 
-# Calculate the standard deviation of the speed of cars. Save as an object called `sd` 
 
+```
 
+```{r mean-solution}
+mean<-mean(cars$speed)
 ```
 
 ## Interactives using Shiny
 
 - Using `runtime: shiny` in the YAML, you can create interactive apps
-- I have a problem when making this presentation however... 
-- The Shiny runtime does not work with the `tutorial` package!
-- My workaround, for this presentation: a separate file
+- This presentation is using the `learnr` package which requires the `runtime: shiny_prerendered` option
+- My workaround, for this presentation: a separate file!
 
 ## Interactive Graphs Using Plotly
 
@@ -205,8 +220,8 @@ m <- list(
 ```
 
 ```{r,warning=FALSE,message=FALSE}
-p <- plot_ly(cars, x = ~speed, y = ~dist)
-p
+plot_ly(cars, x = ~speed, y = ~dist)
+
 ```
 
 ##
@@ -225,15 +240,14 @@ plot_ly(x = cars$speed, type = "box")
 ## 2D Histograms 
 
 ```{r}
-p <- plot_ly(x=cars$speed,y=cars$dist)
-pp <- subplot(
-  p %>% add_markers(alpha = 0.2),
-  p %>% add_histogram2d()
-)
-pp
+plot<-plot_ly(x=cars$speed,y=cars$dist)
+(subplot(
+  plot %>% add_markers(alpha = 0.2),
+  plot %>% add_histogram2d()
+))
+
 
 ```
-
 
 
 

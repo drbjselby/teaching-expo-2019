@@ -1,0 +1,25 @@
+---
+title: "Example App"
+author: "Bekah Selby"
+output: html_document
+runtime: shiny
+---
+
+
+```{r eruptions, echo=FALSE}
+inputPanel(
+  sliderInput("b0", label = "Intercept:",
+              min = -5, max = 5, value = 1, step = 0.2),
+  
+  sliderInput("b1", label = "Slope:",
+              min = -5, max = 5, value = 1, step = 0.2)
+)
+
+renderPlot({
+  plot(cars)
+  abline(a=as.numeric(input$b0),b=as.numeric(input$b1))
+})
+```
+
+
+
